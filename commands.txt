@@ -21,3 +21,6 @@
 
   allure serve
     arranca el servidor para visualizar el grafico
+
+
+web para testear: https://smartbearstore.smartbear.com/samples/TestComplete15/smartstore/

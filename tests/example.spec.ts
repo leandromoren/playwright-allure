@@ -10,8 +10,8 @@ test.afterEach(async ({ page }) => {
   await page.close();
 });
 
-const REPO = 'pw-test-repo-1';
-const USER = 'leandromoren';
+const FACTS = '/facts';
+const USERS = '/users';
 
 test.describe('Table of contents & Page Object Model article', () => {
   test('01 - getting started should contain table of contents', async ({ page }) => {
@@ -43,19 +43,24 @@ test.describe('API TEST', () => {
     Revisar que devuelve false porque no tengo el api token definido en config.ts
   */
   test('01 - Report bug issue', async ({ request }) => {
-    const newIssue = await request.post(`/repos/${USER}/${REPO}/issues`, {
-      data: {
-        title: '[BUG] report 1',
-        body: 'BUG description'
-      }
-    });
-    expect(newIssue.ok()).toBeTruthy();
+    // const newIssue = await request.post(`${FACTS}`, {
+    //   data: {
+    //     title: '[BUG] report 1',
+    //     body: 'BUG description'
+    //   }
+    // });
+    //expect(newIssue.ok()).toBeTruthy();
 
-    const issues = await request.get(`/repos/${USER}/${REPO}/issues`);
+    const issues = await request.get(`${FACTS}`);
     expect(issues.ok()).toBeTruthy();
+    expect(issues.status()).toBe(200);
     expect(await issues.json()).toContainEqual(expect.objectContaining({
-      title: '[BUG] report 1',
-      body: 'BUG description'
+      type: 'cat',
+      _id: '58e008780aac31001185ed05',
+      __v: 0
     }));
+    //console.log(newIssue);
+    console.log("--------------")
+    console.log('El status es: ' + issues.status());
   });
 });

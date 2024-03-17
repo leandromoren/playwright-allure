@@ -1,0 +1,62 @@
+{
+  data: [
+    {
+      id: '8000793f-a1ae-4ec4-8d55-ef83f1f644e5',
+      type: 'group',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      id: 'b8e4e89d-057f-432a-9e58-0b85b29b693c',
+      type: 'group',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      id: 'be0147df-7755-4228-b132-2518c0c6d10d',
+      type: 'group',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      id: '7f6ea988-366a-4e20-b4ba-4d04274fea61',
+      type: 'group',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      id: 'ab110192-e41b-43ff-a630-f7aee156b33a',
+      type: 'group',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      id: '1bbf373b-1937-4e73-9863-45385daa4979',
+      type: 'group',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      id: 'f56dc4b1-ba1a-4454-8ce2-bd5d41404a0c',
+      type: 'group',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      id: '56081cf0-fdf2-4114-9bf7-23a3f5b6af91',
+      type: 'group',
+      attributes: [Object],
+      relationships: [Object]
+    },
+    {
+      id: 'd4b72541-a1c6-46d7-b13c-709e148c7884',
+      type: 'group',
+      attributes: [Object],
+      relationships: [Object]
+    }
+  ],
+  links: {
+    self: 'https://dogapi.dog/api/v2/groups',
+    current: 'https://dogapi.dog/api/v2/groups?page[number]=1'
+  }
+}

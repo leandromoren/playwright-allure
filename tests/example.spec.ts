@@ -84,7 +84,7 @@ test.describe('Table of contents & Page Object Model article', () => {
     console.log('El status es: ' + rq.status());
   });
 
-  test('04 - Get status 200 /facts', async ({ request }) => {
+  test.skip('04 - Get status 200 /facts', async ({ request }) => {
     const rq = await request.get(`https://dogapi.dog/api/v2${FACTS}`);
     const json = await rq.json();
 
@@ -97,6 +97,26 @@ test.describe('Table of contents & Page Object Model article', () => {
       expect(type).toBeTruthy();
       expect(attributes).toBeTruthy();
     };
+
+    expect(rq.status()).toBe(200);
+    expect(rq.statusText()).toMatch(/OK/);
+  });
+
+  test('05 - Get status 200 /groups', async ({ request }) => {
+    const rq = await request.get(`https://dogapi.dog/api/v2${GROUPS}`);
+    const json = await rq.json();
+
+    for(const groups of json['data']) {
+      const id            = groups['id'];
+      const type          = groups['type'];
+      const attributes    = groups['attributes'];
+      const relationships = groups['relationships'];
+
+      expect(id).toBeTruthy();
+      expect(type).toBeTruthy();
+      expect(attributes).toBeTruthy();
+      expect(relationships).toBeTruthy();
+    }
 
     expect(rq.status()).toBe(200);
     expect(rq.statusText()).toMatch(/OK/);

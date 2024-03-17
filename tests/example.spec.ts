@@ -11,8 +11,8 @@ test.afterEach(async ({ page }) => {
 });
 
 const BREEDS = '/breeds';
-const GET_FACTS = '/facts';
-const GET_GROUPS = '/groups';
+const FACTS = '/facts';
+const GROUPS = '/groups';
 
 test.describe('Table of contents & Page Object Model article', () => {
   test.skip('01 - getting started should contain table of contents', async ({ page }) => {
@@ -38,7 +38,7 @@ test.describe('Table of contents & Page Object Model article', () => {
     await expect(page.locator('article')).toContainText('Page Object Model is a common pattern');
   });
 
-  test('03 - Get status 200 & validate json attributes /breeds', async ({ request }) => {
+  test.skip('03 - Get status 200 & validate json attributes /breeds', async ({ request }) => {
     const rq = await request.get(`https://dogapi.dog/api/v2${BREEDS}`);
     const one_or_two_digits = /[0-9]{1,2}/;
 
@@ -84,7 +84,21 @@ test.describe('Table of contents & Page Object Model article', () => {
     console.log('El status es: ' + rq.status());
   });
 
-  test.skip('04 - Get status 200 /facts', async ({ request }) => {
+  test('04 - Get status 200 /facts', async ({ request }) => {
+    const rq = await request.get(`https://dogapi.dog/api/v2${FACTS}`);
+    const json = await rq.json();
 
-  })
+    for (const facts of json['data']) {
+      const id          = facts['id'];
+      const type        = facts['type'];
+      const attributes  = facts['attributes'];
+
+      expect(id).toBeTruthy();
+      expect(type).toBeTruthy();
+      expect(attributes).toBeTruthy();
+    };
+
+    expect(rq.status()).toBe(200);
+    expect(rq.statusText()).toMatch(/OK/);
+  });
 });

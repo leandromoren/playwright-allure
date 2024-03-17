@@ -1,0 +1,9 @@
+{
+  data: [
+    {
+      id: '425b86b3-5f71-4e4e-be30-54f6e8d68799',
+      type: 'fact',
+      attributes: [Object]
+    }
+  ]
+}

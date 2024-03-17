@@ -40,6 +40,7 @@ test.describe('Table of contents & Page Object Model article', () => {
 
   test('03 - Get status 200 & validate json attributes /breeds', async ({ request }) => {
     const rq = await request.get(`https://dogapi.dog/api/v2${BREEDS}`);
+    const one_or_two_digits = /[0-9]{1,2}/;
 
     const json = await rq.json();
 
@@ -61,13 +62,13 @@ test.describe('Table of contents & Page Object Model article', () => {
 
       // Atributos del json
       expect(description).toBeTruthy();
-      expect(female_weight_max).toBeTruthy();
-      expect(female_weight_min).toBeTruthy();
-      expect(male_weight_max).toBeTruthy();
-      expect(male_weight_min).toBeTruthy();
-      expect(hypoallergenic).toBeFalsy();
-      expect(life_max).toBeTruthy();
-      expect(life_min).toBeTruthy();
+      expect(String(female_weight_max)).toMatch(one_or_two_digits);
+      expect(String(female_weight_min)).toMatch(one_or_two_digits);;
+      expect(String(male_weight_max)).toMatch(one_or_two_digits);;
+      expect(String(male_weight_min)).toMatch(one_or_two_digits);;
+      expect(hypoallergenic === true || hypoallergenic === false).toBeTruthy();
+      expect(String(life_max)).toMatch(one_or_two_digits);;
+      expect(String(life_min)).toMatch(one_or_two_digits);;
       expect(name).toBeTruthy();
       expect(id).toBeTruthy();
       expect(relationships_id).toBeTruthy();

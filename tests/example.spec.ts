@@ -38,26 +38,26 @@ test.describe('Table of contents & Page Object Model article', () => {
     await expect(page.locator('article')).toContainText('Page Object Model is a common pattern');
   });
 
-  test('03 - Get status 200 /breeds', async ({ request }) => {
+  test('03 - Get status 200 & validate json attributes /breeds', async ({ request }) => {
     const rq = await request.get(`https://dogapi.dog/api/v2${BREEDS}`);
 
     const json = await rq.json();
 
     // Recorro los atributos del json que devuelve la api
-    for (const breed of json['data']) {
-      const description = breed['attributes']['description'];
-      const female_weight_max = breed['attributes']['female_weight']['max'];
-      const female_weight_min = breed['attributes']['female_weight']['min'];
-      const male_weight_max = breed['attributes']['male_weight']['max'];
-      const male_weight_min = breed['attributes']['male_weight']['min'];
-      const hypoallergenic = breed['attributes']['hypoallergenic'];
-      const life_max = breed['attributes']['life']['max'];
-      const life_min = breed['attributes']['life']['min'];
-      const name = breed['attributes']['name'];
-      const id = breed['id'];
-      const relationships_id = breed['relationships']['group']['data']['id'];
-      const relationships_type = breed['relationships']['group']['data']['type'];
-      const type = breed['type'];
+    for (const attr of json['data']) {
+      const description = attr['attributes']['description'];
+      const female_weight_max = attr['attributes']['female_weight']['max'];
+      const female_weight_min = attr['attributes']['female_weight']['min'];
+      const male_weight_max = attr['attributes']['male_weight']['max'];
+      const male_weight_min = attr['attributes']['male_weight']['min'];
+      const hypoallergenic = attr['attributes']['hypoallergenic'];
+      const life_max = attr['attributes']['life']['max'];
+      const life_min = attr['attributes']['life']['min'];
+      const name = attr['attributes']['name'];
+      const id = attr['id'];
+      const relationships_id = attr['relationships']['group']['data']['id'];
+      const relationships_type = attr['relationships']['group']['data']['type'];
+      const type = attr['type'];
 
       // Atributos del json
       expect(description).toBeTruthy();

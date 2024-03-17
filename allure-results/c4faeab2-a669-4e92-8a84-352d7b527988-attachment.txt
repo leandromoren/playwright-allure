@@ -1,0 +1,13 @@
+Caucasian Shepherd Dog
+Bouvier des Flandres
+Grand Basset Griffon Vendéen
+Hokkaido
+Japanese Terrier
+Hanoverian Scenthound
+Tibetan Spaniel
+Border Collie
+Curly-Coated Retriever
+Skye Terrier
+200
+--------------
+El status es: 200

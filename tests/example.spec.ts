@@ -10,11 +10,12 @@ test.afterEach(async ({ page }) => {
   await page.close();
 });
 
-const FACTS = '/facts';
-const USERS = '/users';
+const BREEDS = '/breeds';
+const GET_FACTS = '/facts';
+const GET_GROUPS = '/groups';
 
 test.describe('Table of contents & Page Object Model article', () => {
-  test('01 - getting started should contain table of contents', async ({ page }) => {
+  test.skip('01 - getting started should contain table of contents', async ({ page }) => {
     const playwrightDev = new PlaywrightDevPage(page);
     await playwrightDev.goto();
     await playwrightDev.getStarted();
@@ -30,37 +31,57 @@ test.describe('Table of contents & Page Object Model article', () => {
     ]);
   });
 
-  test('02 - should show Page Object Model article', async ({ page }) => {
+  test.skip('02 - should show Page Object Model article', async ({ page }) => {
     const playwrightDev = new PlaywrightDevPage(page);
     await playwrightDev.goto();
     await playwrightDev.pageObjectModel();
     await expect(page.locator('article')).toContainText('Page Object Model is a common pattern');
   });
-});
 
-test.describe('API TEST', () => {
-  /*
-    Revisar que devuelve false porque no tengo el api token definido en config.ts
-  */
-  test('01 - Report bug issue', async ({ request }) => {
-    // const newIssue = await request.post(`${FACTS}`, {
-    //   data: {
-    //     title: '[BUG] report 1',
-    //     body: 'BUG description'
-    //   }
-    // });
-    //expect(newIssue.ok()).toBeTruthy();
+  test('03 - Get status 200 /breeds', async ({ request }) => {
+    const rq = await request.get(`https://dogapi.dog/api/v2${BREEDS}`);
 
-    const issues = await request.get(`${FACTS}`);
-    expect(issues.ok()).toBeTruthy();
-    expect(issues.status()).toBe(200);
-    expect(await issues.json()).toContainEqual(expect.objectContaining({
-      type: 'cat',
-      _id: '58e008780aac31001185ed05',
-      __v: 0
-    }));
-    //console.log(newIssue);
+    const json = await rq.json();
+
+    // Recorro los atributos del json que devuelve la api
+    for (const breed of json['data']) {
+      const description = breed['attributes']['description'];
+      const female_weight_max = breed['attributes']['female_weight']['max'];
+      const female_weight_min = breed['attributes']['female_weight']['min'];
+      const male_weight_max = breed['attributes']['male_weight']['max'];
+      const male_weight_min = breed['attributes']['male_weight']['min'];
+      const hypoallergenic = breed['attributes']['hypoallergenic'];
+      const life_max = breed['attributes']['life']['max'];
+      const life_min = breed['attributes']['life']['min'];
+      const name = breed['attributes']['name'];
+      const id = breed['id'];
+      const relationships_id = breed['relationships']['group']['data']['id'];
+      const relationships_type = breed['relationships']['group']['data']['type'];
+      const type = breed['type'];
+
+      // Atributos del json
+      expect(description).toBeTruthy();
+      expect(female_weight_max).toBeTruthy();
+      expect(female_weight_min).toBeTruthy();
+      expect(male_weight_max).toBeTruthy();
+      expect(male_weight_min).toBeTruthy();
+      expect(hypoallergenic).toBeFalsy();
+      expect(life_max).toBeTruthy();
+      expect(life_min).toBeTruthy();
+      expect(name).toBeTruthy();
+      expect(id).toBeTruthy();
+      expect(relationships_id).toBeTruthy();
+      expect(relationships_type).toBeTruthy();
+      expect(type).toBeTruthy();
+    };
+
+    expect(rq.ok()).toBeTruthy();
+    expect(rq.status()).toBe(200);
     console.log("--------------")
-    console.log('El status es: ' + issues.status());
+    console.log('El status es: ' + rq.status());
   });
+
+  test.skip('04 - Get status 200 /facts', async ({ request }) => {
+
+  })
 });

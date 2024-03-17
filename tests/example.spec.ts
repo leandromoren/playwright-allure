@@ -46,19 +46,19 @@ test.describe('Table of contents & Page Object Model article', () => {
 
     // Recorro los atributos del json que devuelve la api
     for (const attr of json['data']) {
-      const description = attr['attributes']['description'];
-      const female_weight_max = attr['attributes']['female_weight']['max'];
-      const female_weight_min = attr['attributes']['female_weight']['min'];
-      const male_weight_max = attr['attributes']['male_weight']['max'];
-      const male_weight_min = attr['attributes']['male_weight']['min'];
-      const hypoallergenic = attr['attributes']['hypoallergenic'];
-      const life_max = attr['attributes']['life']['max'];
-      const life_min = attr['attributes']['life']['min'];
-      const name = attr['attributes']['name'];
-      const id = attr['id'];
-      const relationships_id = attr['relationships']['group']['data']['id'];
-      const relationships_type = attr['relationships']['group']['data']['type'];
-      const type = attr['type'];
+      const description         = attr['attributes']['description'];
+      const female_weight_max   = attr['attributes']['female_weight']['max'];
+      const female_weight_min   = attr['attributes']['female_weight']['min'];
+      const male_weight_max     = attr['attributes']['male_weight']['max'];
+      const male_weight_min     = attr['attributes']['male_weight']['min'];
+      const hypoallergenic      = attr['attributes']['hypoallergenic'];
+      const life_max            = attr['attributes']['life']['max'];
+      const life_min            = attr['attributes']['life']['min'];
+      const name                = attr['attributes']['name'];
+      const id                  = attr['id'];
+      const relationships_id    = attr['relationships']['group']['data']['id'];
+      const relationships_type  = attr['relationships']['group']['data']['type'];
+      const type                = attr['type'];
 
       // Atributos del json
       expect(description).toBeTruthy();
@@ -78,6 +78,8 @@ test.describe('Table of contents & Page Object Model article', () => {
 
     expect(rq.ok()).toBeTruthy();
     expect(rq.status()).toBe(200);
+    expect(Object.keys(json).length).toBeGreaterThan(0); // Verifica que el json no este vacio
+    expect(rq.statusText()).toMatch(/OK/);
     console.log("--------------")
     console.log('El status es: ' + rq.status());
   });

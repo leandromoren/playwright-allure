@@ -10,9 +10,7 @@ test.afterEach(async ({ page }) => {
   await page.close();
 });
 
-const BREEDS = '/breeds';
-const FACTS = '/facts';
-const GROUPS = '/groups';
+const BASE_URL = 'https://dogapi.dog/api/v2';
 
 test.describe('Table of contents & Page Object Model article', () => {
   test.skip('01 - getting started should contain table of contents', async ({ page }) => {
@@ -39,7 +37,7 @@ test.describe('Table of contents & Page Object Model article', () => {
   });
 
   test.skip('03 - Get status 200 & validate json attributes /breeds', async ({ request }) => {
-    const rq = await request.get(`https://dogapi.dog/api/v2${BREEDS}`);
+    const rq = await request.get(`${BASE_URL}/breeds`);
     const one_or_two_digits = /[0-9]{1,2}/;
 
     const json = await rq.json();
@@ -85,7 +83,7 @@ test.describe('Table of contents & Page Object Model article', () => {
   });
 
   test.skip('04 - Get status 200 /facts', async ({ request }) => {
-    const rq = await request.get(`https://dogapi.dog/api/v2${FACTS}`);
+    const rq = await request.get(`${BASE_URL}/facts`);
     const json = await rq.json();
 
     for (const facts of json['data']) {
@@ -103,7 +101,7 @@ test.describe('Table of contents & Page Object Model article', () => {
   });
 
   test('05 - Get status 200 /groups', async ({ request }) => {
-    const rq = await request.get(`https://dogapi.dog/api/v2${GROUPS}`);
+    const rq = await request.get(`${BASE_URL}/groups`);
     const json = await rq.json();
 
     for(const groups of json['data']) {

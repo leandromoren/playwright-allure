@@ -133,4 +133,16 @@ test.describe('API testing from "dogapi"', () => {
     expect(json.name).toBe('Luffy');
     expect(rq.status()).toBe(201);
   });
+
+  test('07 - Update User ReqRes', async ({ request }) => {
+    const updateUser = {
+      name: 'Monkey D. Luffy',
+      job: 'Pirate King',
+    }
+    const rq = await request.put(`${REQREST}/api/users/2`, {data: updateUser});
+    expect(rq.ok()).toBeTruthy();
+    const json = await rq.json();
+    expect(json.name).toBe('Monkey D. Luffy');
+    expect(rq.status()).toBe(200);
+  });
 });

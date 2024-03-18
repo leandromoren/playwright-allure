@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import { allure } from 'allure-playwright';
-import { PlaywrightDevPage } from '../pageObject/playwright-dev-page';
 
 test.beforeEach(async () => {
   await allure.suite('Playwright Dev Pages');
@@ -11,32 +10,11 @@ test.afterEach(async ({ page }) => {
 });
 
 const BASE_URL = 'https://dogapi.dog/api/v2';
+const REQREST = 'https://reqres.in';;
 
-test.describe('Table of contents & Page Object Model article', () => {
-  test.skip('01 - getting started should contain table of contents', async ({ page }) => {
-    const playwrightDev = new PlaywrightDevPage(page);
-    await playwrightDev.goto();
-    await playwrightDev.getStarted();
-    await expect(playwrightDev.tocList).toHaveText([
-      `How to install Playwright`,
-      `What's Installed`,
-      `How to run the example test`,
-      `How to open the HTML test report`,
-      `Write tests using web first assertions, page fixtures and locators`,
-      `Run single test, multiple tests, headed mode`,
-      `Generate tests with Codegen`,
-      `See a trace of your tests`
-    ]);
-  });
+test.describe('API testing from "dogapi"', () => {
 
-  test.skip('02 - should show Page Object Model article', async ({ page }) => {
-    const playwrightDev = new PlaywrightDevPage(page);
-    await playwrightDev.goto();
-    await playwrightDev.pageObjectModel();
-    await expect(page.locator('article')).toContainText('Page Object Model is a common pattern');
-  });
-
-  test.skip('03 - Get status 200 & validate json attributes /breeds', async ({ request }) => {
+  test('01 - Get status 200 & validate json attributes /breeds', async ({ request }) => {
     const rq = await request.get(`${BASE_URL}/breeds`);
     const one_or_two_digits = /[0-9]{1,2}/;
 
@@ -78,11 +56,12 @@ test.describe('Table of contents & Page Object Model article', () => {
     expect(rq.status()).toBe(200);
     expect(Object.keys(json).length).toBeGreaterThan(0); // Verifica que el json no este vacio
     expect(rq.statusText()).toMatch(/OK/);
+    expect(json.data.length).toBeGreaterThan(0);
     console.log("--------------")
     console.log('El status es: ' + rq.status());
   });
 
-  test.skip('04 - Get status 200 /facts', async ({ request }) => {
+  test('02 - Get status 200 /facts', async ({ request }) => {
     const rq = await request.get(`${BASE_URL}/facts`);
     const json = await rq.json();
 
@@ -98,9 +77,15 @@ test.describe('Table of contents & Page Object Model article', () => {
 
     expect(rq.status()).toBe(200);
     expect(rq.statusText()).toMatch(/OK/);
+    expect(json.data.length).toBeGreaterThan(0);
   });
 
-  test('05 - Get status 200 /groups', async ({ request }) => {
+  const USER = {
+    username: 'test',
+    password: 'test',
+  };
+
+  test('03 - Get status 200 /groups', async ({ request }) => {
     const rq = await request.get(`${BASE_URL}/groups`);
     const json = await rq.json();
 
@@ -114,9 +99,38 @@ test.describe('Table of contents & Page Object Model article', () => {
       expect(type).toBeTruthy();
       expect(attributes).toBeTruthy();
       expect(relationships).toBeTruthy();
+      expect(json.data.length).toBeGreaterThan(0);
     }
 
     expect(rq.status()).toBe(200);
     expect(rq.statusText()).toMatch(/OK/);
+  });
+
+  test('04 - Go to page', async ({ page }) => {
+    await page.goto('/api/v2');
+    expect(page.url()).toContain('https://dogapi.dog/api/v2')
+    expect(page.url()).toMatch('https://dogapi.dog/api/v2')
+  });
+
+  test('05 - API TESTING REQRES', async ({ request }) => {
+    const rq = await request.get(`${REQREST}/api/users?page=2`);
+    const json = await rq.json();
+
+    expect(json.data.length).toBeGreaterThan(0);
+    expect(rq.status()).toBe(200);
+    expect(rq.ok()).toBeTruthy();
+
+  });
+
+  test('06 - Create new User ReqRes', async ({ request }) => {
+    const newUser = {
+      name: 'Luffy',
+      job: 'Pirate',
+    }
+    const rq = await request.post(`${REQREST}/api/users`, {data: newUser});
+    expect(rq.ok()).toBeTruthy();
+    const json = await rq.json();
+    expect(json.name).toBe('Luffy');
+    expect(rq.status()).toBe(201);
   });
 });

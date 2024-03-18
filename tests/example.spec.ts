@@ -119,7 +119,6 @@ test.describe('API testing from "dogapi"', () => {
     expect(json.data.length).toBeGreaterThan(0);
     expect(rq.status()).toBe(200);
     expect(rq.ok()).toBeTruthy();
-
   });
 
   test('06 - Create new User ReqRes', async ({ request }) => {
@@ -145,4 +144,43 @@ test.describe('API testing from "dogapi"', () => {
     expect(json.name).toBe('Monkey D. Luffy');
     expect(rq.status()).toBe(200);
   });
+
+  test('08 - Delete User ReqRes', async ({ request }) => {
+    const rq = await request.delete(`${REQREST}/api/users/2`);
+    expect(rq.ok()).toBeTruthy();
+    expect(rq.status()).toBe(204);
+  });
+
+  const testData = [
+    {
+      name: 'Luffy',
+      job: 'Pirate',
+    },
+    {
+      name: 'Zoro',
+      job: 'Pirate',
+    },
+    {
+      name: 'Sanji',
+      job: 'Pirate',
+    },
+    {
+      name: 'Nami',
+      job: 'Pirate',
+    },
+    {
+      name: 'Chopper',
+      job: 'Pirate',
+    }
+  ];
+
+  testData.forEach((data) => {
+    test(`09 - Create new User with name ${data.name}`, async ({ request }) => {
+      const response = await request.post(`${REQREST}/api/users`, { data });
+      expect(response.ok()).toBeTruthy();
+      const user = await response.json();
+      expect(user.name).toBe(data.name);
+      expect(response.status()).toBe(201);
+    })
+  })
 });
